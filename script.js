@@ -1,4 +1,5 @@
 //your code here
+
 const nameInput = document.getElementById("item-name-input");
 const priceInput = document.getElementById("item-price-input");
 const addButton = document.getElementById("add-btn");
@@ -8,21 +9,26 @@ let grandTotal = 0;
 
 addButton.addEventListener("click", function () {
     const itemName = nameInput.value.trim();
-    const itemPrice = priceInput.value.trim();
+    const priceValue = priceInput.value.trim();
 
-    if (itemName === "" || itemPrice === "" || Number(itemPrice) <= 0) {
+    // Reject invalid input
+    if (itemName === "" || priceValue === "") {
         return;
     }
 
-    const price = Number(itemPrice);
+    const price = Number(priceValue);
 
-    const firstRow = cartBody.querySelector("tr");
-    const totalCell = firstRow.querySelector('[data-ns-test="grandTotal"]');
-
-    if (totalCell) {
-        firstRow.remove();
+    if (!Number.isFinite(price) || price <= 0) {
+        return;
     }
 
+    // Remove total row temporarily
+    const totalRow = document.getElementById("total-row");
+    if (totalRow) {
+        totalRow.remove();
+    }
+
+    // Create item row
     const row = document.createElement("tr");
 
     const nameCell = document.createElement("td");
@@ -35,20 +41,25 @@ addButton.addEventListener("click", function () {
 
     row.appendChild(nameCell);
     row.appendChild(priceCell);
+
     cartBody.appendChild(row);
 
+    // Update total
     grandTotal += price;
 
-    const totalRow = document.createElement("tr");
-    const totalCellNew = document.createElement("td");
+    // Add total row at bottom
+    const newTotalRow = document.createElement("tr");
+    newTotalRow.id = "total-row";
 
-    totalCellNew.setAttribute("data-ns-test", "grandTotal");
-    totalCellNew.setAttribute("colspan", "2");
-    totalCellNew.textContent = grandTotal;
+    const totalCell = document.createElement("td");
+    totalCell.setAttribute("data-ns-test", "grandTotal");
+    totalCell.setAttribute("colspan", "2");
+    totalCell.textContent = grandTotal;
 
-    totalRow.appendChild(totalCellNew);
-    cartBody.appendChild(totalRow);
+    newTotalRow.appendChild(totalCell);
+    cartBody.appendChild(newTotalRow);
 
+    // Clear inputs
     nameInput.value = "";
     priceInput.value = "";
 });

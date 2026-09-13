@@ -1,14 +1,11 @@
 <!DOCTYPE html>
-
 <html>
-
 <head>
-      <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles.css">
 </head>
-
 <body>
-	<!-- the entire body must be written by student -->
-	<div>
+
+    <div>
         <input type="text" id="item-name-input" placeholder="Item Name">
         <input type="number" id="item-price-input" placeholder="Price">
         <button id="add-btn">Add</button>
@@ -21,15 +18,14 @@
                 <th>Item Price</th>
             </tr>
         </thead>
+
         <tbody id="cart-body">
-            <tr>
+            <tr id="total-row">
                 <td colspan="2" data-ns-test="grandTotal">0</td>
             </tr>
         </tbody>
     </table>
-    <script type="text/javascript" src="./script.js">
-</script>
 
+    <script type="text/javascript" src="./script.js"></script>
 </body>
-
 </html>
